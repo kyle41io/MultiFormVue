@@ -6,6 +6,13 @@
         type="textarea"
         label="Lý do muốn ứng tuyển vào công ty"
         :maxCharacter="1000"
+        v-model="reasonToApply"
+      />
+      <InputCustom
+        required
+        type="money"
+        label="Mức lương mong muốn"
+        v-model="desiredSalary"
       />
     </div>
     <button :class="{ disabled: !allRequiredPass }" @click="handleComplete">
@@ -20,11 +27,16 @@ export default {
   components: { InputCustom },
   data() {
     return {
-      allRequiredPass: false,
+      allRequiredPass: true,
+      reasonToApply: "",
+      desiredSalary: 0,
     };
   },
   methods: {
     handleComplete() {
+      const reason = this.reasonToApply;
+      const salary = this.desiredSalary;
+      // console.log(reason, salary);
       window.location.reload();
     },
   },
@@ -36,10 +48,10 @@ export default {
   display: flex;
   width: 926px;
   height: 346px;
-  padding: 20px 32px 24px 32px;
+  padding: 24px 32px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 18px;
   border-radius: 4px;
   border: 1px solid #dcdcdc;
 }
@@ -57,6 +69,9 @@ button {
     cursor: default;
     pointer-events: none;
     background: #dcdcdc;
+  }
+  &:hover {
+    background: #2a6aaa;
   }
 }
 </style>

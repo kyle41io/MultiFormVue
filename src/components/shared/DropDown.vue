@@ -10,20 +10,14 @@
 
 <script>
 import DropDownIcon from "@/components/icons/DropDownIcon.vue";
+import { cities, positions } from "@/const/index";
 export default {
   components: { DropDownIcon },
   data() {
     return {
       info: { name: "", bod: "", city: "", position: "", descrioption: "" },
-      cities: ["Hà Nội", "TP Hồ Chí Minh", "TP Đà Nẵng"],
-      positions: [
-        "Internship",
-        "Fresher",
-        "Junior",
-        "Middle",
-        "Senior",
-        "Leader",
-      ],
+      cities: cities,
+      positions: positions,
     };
   },
 };
@@ -33,7 +27,7 @@ export default {
 #drop-down {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   position: relative;
   select {
     display: flex;
@@ -45,8 +39,7 @@ export default {
     border-radius: 4px;
     border: 1px solid var(--black-04, #dbdbdb);
     background: var(--White, #fff);
-    outline-color: #627d98;
-    -webkit-appearance: none;
+    appearance: none;
   }
   .icon {
     position: absolute;

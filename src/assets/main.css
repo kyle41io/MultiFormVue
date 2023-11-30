@@ -13,3 +13,13 @@ label{
   line-height: 20px; 
   font-size: 14px;
 }
+select, input, textarea{
+  outline-color: #627d98;
+  appearance: none;
+}
+input{
+  width: 528px;
+}
+input[type="date"], input[type="number"] {
+  width: 118px;
+}

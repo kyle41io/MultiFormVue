@@ -1,49 +1,104 @@
 <template>
-  <div>
-    <CompanyCard />
+  <div class="work-experience">
+    <div class="companies">
+      <CompanyCard
+        v-for="(company, index) in companies"
+        :key="index"
+        @delete-company="deleteCompany(index)"
+      />
+    </div>
+
+    <div class="add-company" @click="companies.push({})">
+      <AddIcon />Thêm công ty
+    </div>
     <div class="nav-btn">
-      <button @click="$emit('update-step', 1)">Quay lại</button>
       <button
         :class="{ disabled: !allRequiredPass }"
         @click="$emit('update-step', 3)"
       >
         Tiếp
       </button>
+      <button class="back" @click="$emit('update-step', 1)">Quay lại</button>
     </div>
   </div>
 </template>
 
 <script>
-import CompanyCard from "./CompanyCard.vue";
+import CompanyCard from "./shared/CompanyCard.vue";
+import AddIcon from "./icons/AddIcon.vue";
 export default {
-  components: { CompanyCard },
+  components: { CompanyCard, AddIcon },
   data() {
     return {
       allRequiredPass: true,
+      companies: [{}],
     };
+  },
+  methods: {
+    deleteCompany(index) {
+      this.companies.splice(index, 1);
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-button {
-  width: 102px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 3px;
-  background: #627d98;
-  color: white;
-  margin-top: 24px;
-  border: none;
-  cursor: pointer;
-  &.disabled {
-    cursor: default;
-    pointer-events: none;
-    background: #dcdcdc;
-  }
-}
-.nav-btn {
+.work-experience {
   display: flex;
-  gap: 26px;
+  flex-direction: column;
+  align-items: start;
+  gap: 30px;
+  .companies {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  button {
+    width: 102px;
+    height: 40px;
+    flex-shrink: 0;
+    font-size: 16px;
+    border-radius: 3px;
+    background: #627d98;
+    color: white;
+    border: none;
+    cursor: pointer;
+    &.disabled {
+      cursor: default;
+      pointer-events: none;
+      background: #dcdcdc;
+    }
+    &:hover {
+      background: #2a6aaa;
+    }
+    &.back {
+      border-radius: 3px;
+      border: 1px solid #dcdcdc;
+      background: #fff;
+      color: #666;
+      &:hover {
+        background: #dbdbdb;
+      }
+    }
+  }
+  .add-company {
+    display: inline-flex;
+    height: 40px;
+    padding: 4px 8px;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 3px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    cursor: pointer;
+    &:hover {
+      background: #dbdbdb;
+    }
+  }
+  .nav-btn {
+    display: flex;
+    gap: 26px;
+  }
 }
 </style>

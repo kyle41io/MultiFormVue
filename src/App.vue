@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       // component: PersonalInfo,
-      step: 2,
+      step: 1,
     };
   },
   methods: {

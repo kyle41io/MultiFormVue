@@ -10,6 +10,7 @@
         label="Mô tả về bản thân"
         :maxCharacter="1000"
       />
+      <UploadImage />
     </div>
     <button
       :class="{ disabled: !allRequiredPass }"
@@ -22,13 +23,17 @@
 
 <script>
 import InputCustom from "@/components/shared/InputCustom.vue";
-import SearchPosition from "@/components/shared/SearchPosition.vue";
-import SearchIcon from "@/components/icons/SearchIcon.vue";
+import SearchPosition from "@/components/shared/searchPosition/SearchPosition.vue";
 import DropDown from "./shared/DropDown.vue";
-// import { emit } from 'vue';
+import UploadImage from "./shared/UploadImage.vue";
 
 export default {
-  components: { InputCustom, SearchIcon, DropDown, SearchPosition },
+  components: {
+    InputCustom,
+    DropDown,
+    SearchPosition,
+    UploadImage,
+  },
   data() {
     return {
       allRequiredPass: true,
@@ -51,10 +56,10 @@ export default {
   display: flex;
   width: 926px;
   height: 849px;
-  padding: 20px 32px 24px 32px;
+  padding: 24px 32px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   border-radius: 4px;
   border: 1px solid #dcdcdc;
 }
@@ -72,6 +77,9 @@ button {
     cursor: default;
     pointer-events: none;
     background: #dcdcdc;
+  }
+  &:hover {
+    background: #2a6aaa;
   }
 }
 </style>
