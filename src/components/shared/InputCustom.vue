@@ -3,8 +3,16 @@
     <label for="">
       <span v-if="required" class="required">Must</span>{{ label }}
     </label>
-    <textarea v-if="type == 'textarea'"></textarea>
-    <input v-else :type="type" :placeholder="placeholder" />
+    <div v-if="type == 'textarea'">
+      <textarea @input="handleInput" @keydown="handleKeyDown"></textarea>
+      <p class="character">{{ characterCount }}/{{ maxCharacter }}</p>
+    </div>
+    <input
+      v-else
+      :type="type"
+      :placeholder="placeholder"
+      :style="{ width: type === 'date' ? '118px' : '528px' }"
+    />
   </div>
 </template>
 
@@ -19,12 +27,26 @@ export default {
       type: String,
     },
     placeholder: { type: String },
+    maxCharacter: { type: Number },
   },
   data() {
-    return {
-      type: "text",
-      required: false,
-    };
+    return { characterCount: 0 };
+  },
+  methods: {
+    handleInput(event) {
+      let inputText = event.target.value;
+      if (inputText.length > this.maxCharacter) {
+        inputText = inputText.substring(0, this.maxCharacter);
+      }
+      this.characterCount = inputText.length;
+    },
+    handleKeyDown(event) {
+      const inputText = event.target.value;
+
+      if (inputText.length >= this.maxCharacter && event.keyCode !== 8) {
+        event.preventDefault();
+      }
+    },
   },
 };
 </script>
@@ -48,15 +70,23 @@ export default {
     line-height: 20px;
     margin-right: 8px;
   }
+  & div .character {
+    color: #666;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
 }
 input {
   min-height: 40px;
-  width: 528px;
-  padding: 8px 10px;
+  padding: 8px;
   border-radius: 4px;
   border: 1px solid #dcdcdc;
+  outline-color: #627d98;
 }
 textarea {
+  position: relative;
   display: flex;
   width: 528px;
   height: 152px;
@@ -67,5 +97,6 @@ textarea {
   border-radius: 4px;
   border: 1px solid #dcdcdc;
   resize: none;
+  outline-color: #627d98;
 }
 </style>

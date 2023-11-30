@@ -8,9 +8,25 @@ export default {
   components: { PersonalInfo, WorkExperience, ConfirmInfo, StepBar },
   data() {
     return {
-      component: PersonalInfo,
-      step: 1,
+      // component: PersonalInfo,
+      step: 2,
     };
+  },
+  methods: {
+    updateStep(step) {
+      this.step = step;
+    },
+  },
+  computed: {
+    component() {
+      if (this.step === 1) {
+        return PersonalInfo;
+      } else if (this.step === 2) {
+        return WorkExperience;
+      } else if (this.step === 3) {
+        return ConfirmInfo;
+      }
+    },
   },
 };
 </script>
@@ -19,7 +35,11 @@ export default {
   <div id="app">
     <StepBar :step="step" />
     <keep-alive
-      ><component :is="component" :step="step"></component
+      ><component
+        :is="component"
+        :step="step"
+        @update-step="updateStep"
+      ></component
     ></keep-alive>
   </div>
 </template>

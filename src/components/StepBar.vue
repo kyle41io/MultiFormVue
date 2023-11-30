@@ -52,7 +52,7 @@ export default {
   .step-bar {
     display: flex;
     position: relative;
-    gap: 40px;
+    gap: 80px;
   }
   .step-bar::before {
     content: "";
@@ -60,7 +60,7 @@ export default {
     left: 40px;
     top: 20%;
     height: 2px;
-    width: 350px;
+    width: 420px;
     background-color: #dbdbdb;
     z-index: -1;
   }

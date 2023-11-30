@@ -3,22 +3,46 @@
     <div id="personal-info">
       <InputCustom required label="Họ và tên" />
       <InputCustom required label="Ngày sinh" type="date" />
-      <InputCustom type="textarea" label="Mô tả về bản thân" />
+      <DropDown></DropDown>
+      <SearchPosition />
+      <InputCustom
+        type="textarea"
+        label="Mô tả về bản thân"
+        :maxCharacter="1000"
+      />
     </div>
-    <button :class="{ disabled: !allRequiredPass }">Tiếp</button>
+    <button
+      :class="{ disabled: !allRequiredPass }"
+      @click="$emit('update-step', 2)"
+    >
+      Tiếp
+    </button>
   </div>
 </template>
 
 <script>
 import InputCustom from "@/components/shared/InputCustom.vue";
+import SearchPosition from "@/components/shared/SearchPosition.vue";
 import SearchIcon from "@/components/icons/SearchIcon.vue";
+import DropDown from "./shared/DropDown.vue";
+// import { emit } from 'vue';
+
 export default {
-  components: { InputCustom, SearchIcon },
+  components: { InputCustom, SearchIcon, DropDown, SearchPosition },
   data() {
     return {
-      allRequiredPass: false,
+      allRequiredPass: true,
+      info: {
+        name: "",
+        dob: "",
+        city: "",
+        positions: [],
+        descriotion: "",
+        avatar: "",
+      },
     };
   },
+  methods: {},
 };
 </script>
 

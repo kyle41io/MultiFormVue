@@ -6,3 +6,10 @@
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+label{
+  color: var(--text-black, #333);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; 
+  font-size: 14px;
+}
