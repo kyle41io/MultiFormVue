@@ -4,18 +4,14 @@
       <CompanyCard
         v-for="(company, index) in companies"
         :key="index"
+        :company-data="company"
         @delete-company="deleteCompany(index)"
       />
     </div>
 
-    <div class="add-company" @click="companies.push({})">
-      <AddIcon />Thêm công ty
-    </div>
+    <div class="add-company" @click="addCompany"><AddIcon />Thêm công ty</div>
     <div class="nav-btn">
-      <button
-        :class="{ disabled: !allRequiredPass }"
-        @click="$emit('update-step', 3)"
-      >
+      <button :class="{ disabled: !allRequiredPass }" @click="handleNext">
         Tiếp
       </button>
       <button class="back" @click="$emit('update-step', 1)">Quay lại</button>
@@ -37,6 +33,19 @@ export default {
   methods: {
     deleteCompany(index) {
       this.companies.splice(index, 1);
+    },
+    addCompany() {
+      const newCompany = {
+        companyName: "",
+        position: "",
+        period: "",
+        description: "",
+      };
+      this.companies.push(newCompany);
+    },
+    handleNext() {
+      this.$emit("update-step", 3);
+      console.log(this.companies);
     },
   },
 };

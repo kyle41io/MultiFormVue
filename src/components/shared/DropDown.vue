@@ -1,7 +1,7 @@
 <template>
   <div id="drop-down">
     <label for="">Thành phố</label>
-    <select v-model="info.city">
+    <select v-model="selectedCity" @change="handleChange">
       <option v-for="(city, index) in cities" :key="index">{{ city }}</option>
     </select>
     <div class="icon"><DropDownIcon /></div>
@@ -10,15 +10,25 @@
 
 <script>
 import DropDownIcon from "@/components/icons/DropDownIcon.vue";
-import { cities, positions } from "@/const/index";
+import { cities } from "@/const/index";
 export default {
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
   components: { DropDownIcon },
   data() {
     return {
-      info: { name: "", bod: "", city: "", position: "", descrioption: "" },
+      selectedCity: this.value,
       cities: cities,
-      positions: positions,
     };
+  },
+  methods: {
+    handleChange() {
+      this.$emit("input", this.selectedCity);
+    },
   },
 };
 </script>

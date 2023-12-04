@@ -8,7 +8,7 @@
       @dragover.prevent="isDragging = true"
       @dragenter.prevent="isDragging = true"
       @dragleave.prevent="isDragging = false"
-      @drop.prevent="isDragging = false"
+      @drop.prevent="drop($event)"
     >
       <UploadIcon />
       <div class="">
@@ -26,26 +26,41 @@
 <script>
 import UploadIcon from "../icons/UploadIcon.vue";
 export default {
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
   components: { UploadIcon },
   data() {
     return {
       isDragging: false,
       isError: false,
-      imageName: "",
+      imageName: this.value,
     };
   },
   methods: {
     handleFileUpload(event) {
-      const file = event.target.files[0]; // Lấy file từ input
-
-      // Kiểm tra loại file
+      const file = event.target.files[0];
+      this.validateFile(file);
+    },
+    validateFile(file) {
       if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-        this.isError = false; // Reset trạng thái lỗi nếu file hợp lệ
-        this.imageName = file.name; // Gán tên file vào imageName
+        this.isError = false;
+        this.imageName = file.name;
+        this.$emit("input", file.name);
       } else {
-        this.isError = true; // Xét isError=true nếu file không hợp lệ
-        this.imageName = ""; // Reset tên file
+        this.isError = true;
+        this.imageName = "";
+        this.$emit("input", "");
       }
+    },
+    drop(event) {
+      event.preventDefault();
+      this.isDragging = false;
+      const file = event.dataTransfer.files[0];
+      this.validateFile(file);
     },
   },
 };

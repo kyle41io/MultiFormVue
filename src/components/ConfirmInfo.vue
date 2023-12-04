@@ -34,10 +34,8 @@ export default {
   },
   methods: {
     handleComplete() {
-      const reason = this.reasonToApply;
-      const salary = this.desiredSalary;
-      // console.log(reason, salary);
-      window.location.reload();
+      console.log(this.reasonToApply, this.desiredSalary);
+      // window.location.reload();
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="company-card">
     <div class="company-name">
       <div class="company-search">
-        <select v-model="city">
+        <select v-model="companyData.companyName">
           <option v-for="(company, index) in companies" :key="index">
             {{ company }}
           </option>
@@ -13,12 +13,22 @@
         <BinIcon />
       </div>
     </div>
-    <InputCustom required label="Vị trí từng làm" />
-    <InputCustom required type="period" label="Thời gian làm việc" />
+    <InputCustom
+      required
+      label="Vị trí từng làm"
+      v-model="companyData.position"
+    />
+    <InputCustom
+      required
+      type="period"
+      label="Thời gian làm việc"
+      v-model="companyData.period"
+    />
     <InputCustom
       type="textarea"
       label="Mô tả về công việc"
       :maxCharacter="1000"
+      v-model="companyData.description"
     />
   </div>
 </template>
@@ -29,11 +39,15 @@ import InputCustom from "./InputCustom.vue";
 import DropDownIcon from "../icons/DropDownIcon.vue";
 import { companies } from "@/const";
 export default {
+  props: {
+    companyData: {
+      type: Object,
+      required: true,
+    },
+  },
   components: { BinIcon, InputCustom, DropDownIcon },
   data() {
     return {
-      experiences: [],
-      city: "",
       companies: companies,
     };
   },

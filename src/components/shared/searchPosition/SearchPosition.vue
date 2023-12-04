@@ -27,7 +27,7 @@ export default {
       keyword: "",
       keyName: "name",
       keyId: "code",
-      listOptions: positions,
+      // listOptions: positions,
       selectedPositions: [],
     };
   },

@@ -12,15 +12,28 @@
       <p class="character">{{ characterCount }}/{{ maxCharacter }}</p>
     </div>
     <div v-else-if="type === 'period'" class="period">
-      <input type="date" />
+      <input type="date" v-model="startDate" @input="handleInput" />
       <DashIcon />
-      <input type="date" />
+      <input type="date" v-model="endDate" @input="handleInput" />
     </div>
     <div v-else-if="type === 'money'" class="money">
-      <input type="number" style="padding-right: 24px" v-model="value" />
+      <input
+        type="number"
+        style="padding-right: 24px"
+        @input="handleInput"
+        @keydown="handleKeyDown"
+        v-model="value"
+      />
       <div class="currency">VNĐ</div>
     </div>
-    <input v-else :type="type" :placeholder="placeholder" v-model="value" />
+    <input
+      v-else
+      :type="type"
+      :placeholder="placeholder"
+      @input="handleInput"
+      @keydown="handleKeyDown"
+      v-model="value"
+    />
   </div>
 </template>
 
@@ -35,36 +48,25 @@ export default {
     type: {
       type: String,
     },
-    period: { type: Boolean },
     placeholder: { type: String },
     maxCharacter: { type: Number },
   },
   components: { DashIcon },
   data() {
-    return { characterCount: 0, value: null };
+    return { characterCount: 0, startDate: null, endDate: null, value: null };
   },
   methods: {
-    // handleInput(event) {
-    //   let inputText = event.target.value;
-    //   if (inputText.length > this.maxCharacter) {
-    //     inputText = inputText.substring(0, this.maxCharacter);
-    //   }
-    //   this.characterCount = inputText.length;
-    // },
-    // handleKeyDown(event) {
-    //   const inputText = event.target.value;
-
-    //   if (inputText.length >= this.maxCharacter && event.keyCode !== 8) {
-    //     event.preventDefault();
-    //   }
-    // },
     handleInput(event) {
-      let inputText = event.target.value;
-      if (inputText.length > this.maxCharacter) {
-        inputText = inputText.substring(0, this.maxCharacter);
+      if (this.type === "period") {
+        this.inputValue = this.startDate + " to " + this.endDate;
+      } else {
+        let inputText = this.value || "";
+        if (inputText.length > this.maxCharacter) {
+          inputText = inputText.substring(0, this.maxCharacter);
+        }
+        this.characterCount = inputText.length;
+        this.inputValue = inputText;
       }
-      this.characterCount = inputText.length;
-      this.inputValue = inputText;
     },
 
     handleKeyDown(event) {

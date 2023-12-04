@@ -1,21 +1,19 @@
 <template>
   <div class="">
     <div id="personal-info">
-      <InputCustom required label="Họ và tên" />
-      <InputCustom required label="Ngày sinh" type="date" />
-      <DropDown></DropDown>
+      <InputCustom required label="Họ và tên" v-model="info.name" />
+      <InputCustom required label="Ngày sinh" type="date" v-model="info.dob" />
+      <DropDown v-model="info.city"></DropDown>
       <SearchPosition />
       <InputCustom
         type="textarea"
         label="Mô tả về bản thân"
         :maxCharacter="1000"
+        v-model="info.description"
       />
-      <UploadImage />
+      <UploadImage v-model="info.avatar" />
     </div>
-    <button
-      :class="{ disabled: !allRequiredPass }"
-      @click="$emit('update-step', 2)"
-    >
+    <button :class="{ disabled: !allRequiredPass }" @click="handleComplete">
       Tiếp
     </button>
   </div>
@@ -42,12 +40,23 @@ export default {
         dob: "",
         city: "",
         positions: [],
-        descriotion: "",
+        description: "",
         avatar: "",
       },
     };
   },
-  methods: {},
+  methods: {
+    handleComplete() {
+      console.log(
+        this.info.name,
+        this.info.dob,
+        this.info.city,
+        this.info.description,
+        this.info.avatar
+      );
+      this.$emit("update-step", 2);
+    },
+  },
 };
 </script>
 
