@@ -37,7 +37,7 @@ export default {
       const newCompany = {
         companyName: "",
         position: "",
-        period: "",
+        period: {},
         description: "",
       };
       this.companies.push(newCompany);
@@ -50,7 +50,12 @@ export default {
   computed: {
     allRequiredPass() {
       for (const company of this.companies) {
-        if (!company.companyName || !company.position || !company.period) {
+        if (
+          !company.companyName ||
+          !company.position ||
+          !company.period.startDate ||
+          !company.period.endDate
+        ) {
           return false;
         }
       }

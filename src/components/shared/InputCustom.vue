@@ -19,7 +19,10 @@
         v-model="startDate"
         @input="handleInput"
         @blur="isBlur = true"
-        :class="{ error: isBlur && required && !value }"
+        :class="{
+          error:
+            (isBlur && required && !value) || isInvalidDate || isInvalidPeriod,
+        }"
       />
       <DashIcon />
       <input
@@ -27,7 +30,10 @@
         v-model="endDate"
         @input="handleInput"
         @blur="isBlur = true"
-        :class="{ error: isBlur && required && !value }"
+        :class="{
+          error:
+            (isBlur && required && !value) || isInvalidDate || isInvalidPeriod,
+        }"
       />
     </div>
     <div v-else-if="type === 'money'" class="money">
@@ -50,8 +56,11 @@
       @keydown="handleKeyDown"
       @blur="isBlur = true"
       v-model="value"
-      :class="{ error: isBlur && required && !value }"
+      :class="{ error: (isBlur && required && !value) || isInvalidDate }"
     />
+    <p v-if="isInvalidDate" class="error-text">
+      Không được chọn quá thời gian hiện tại
+    </p>
     <div v-if="isBlur && required && !value" class="error-text">
       Thông tin quan trọng, yêu cầu nhập
     </div>
@@ -80,11 +89,22 @@ export default {
       endDate: "",
       value: null,
       isBlur: false,
+      isInvalidDate: false,
+      isInvalidPeriod: false,
     };
   },
   methods: {
     handleInput(event) {
+      const currentDate = new Date().toISOString().split("T")[0];
+      if (this.type === "date" && this.value > currentDate) {
+        this.isInvalidDate = true;
+        return;
+      } else this.isInvalidDate = false;
       if (this.type === "period") {
+        if (this.startDate > currentDate || this.endDate > currentDate) {
+          this.isInvalidDate = true;
+          return;
+        } else this.isInvalidDate = false;
         this.inputValue = {
           startDate: this.startDate,
           endDate: this.endDate,
