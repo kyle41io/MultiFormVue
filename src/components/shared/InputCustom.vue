@@ -76,8 +76,8 @@ export default {
   data() {
     return {
       characterCount: 0,
-      startDate: null,
-      endDate: null,
+      startDate: "",
+      endDate: "",
       value: null,
       isBlur: false,
     };
@@ -85,15 +85,19 @@ export default {
   methods: {
     handleInput(event) {
       if (this.type === "period") {
-        this.inputValue = this.startDate + " to " + this.endDate;
+        this.value = {
+          startDate: this.startDate,
+          endDate: this.endDate,
+        };
       } else {
         let inputText = this.value || "";
         if (inputText.length > this.maxCharacter) {
           inputText = inputText.substring(0, this.maxCharacter);
         }
         this.characterCount = inputText.length;
-        this.inputValue = inputText;
+        this.value = inputText;
       }
+      // console.log(this.value);
     },
 
     handleKeyDown(event) {
@@ -102,19 +106,19 @@ export default {
       if (inputText.length >= this.maxCharacter && event.keyCode !== 8) {
         event.preventDefault();
       }
-      this.inputValue = inputText;
+      this.value = inputText;
     },
   },
-  computed: {
-    inputValue: {
-      get() {
-        return this.value;
-      },
-      set(newValue) {
-        this.$emit("input", newValue);
-      },
-    },
-  },
+  // computed: {
+  //   value: {
+  //     get() {
+  //       return this.value;
+  //     },
+  //     set(newValue) {
+  //       this.$emit("input", newValue);
+  //     },
+  //   },
+  // },
 };
 </script>
 

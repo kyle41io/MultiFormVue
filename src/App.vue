@@ -9,11 +9,34 @@ export default {
   data() {
     return {
       step: 1,
+      info: {},
+      companies: [{}],
+      reasonToApply: "",
+      desiredSalary: 0,
     };
   },
   methods: {
     updateStep(step) {
       this.step = step;
+    },
+    updateInfo(info) {
+      this.info = info;
+    },
+    updateCompanies(companies) {
+      this.companies = companies;
+    },
+    updateConfirmInfo(confirmInfo) {
+      this.reasonToApply = confirmInfo.reasonToApply;
+      this.desiredSalary = confirmInfo.desiredSalary;
+    },
+    createJSONObject() {
+      const jsonObject = {
+        info: this.info,
+        companies: this.companies,
+        reasonToApply: this.reasonToApply,
+        desiredSalary: this.desiredSalary,
+      };
+      console.log(jsonObject);
     },
   },
   computed: {
@@ -38,8 +61,12 @@ export default {
         :is="component"
         :step="step"
         @update-step="updateStep"
+        @update-info="updateInfo"
+        @update-companies="updateCompanies"
+        @update-confirm-info="updateConfirmInfo"
       ></component
     ></keep-alive>
+    <!-- <button @click="createJSONObject">Tạo JSON Object</button> -->
   </div>
 </template>
 

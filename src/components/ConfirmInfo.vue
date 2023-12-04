@@ -33,7 +33,11 @@ export default {
   },
   methods: {
     handleComplete() {
-      window.location.reload();
+      this.$emit("update-confirm-info", {
+        reasonToApply: this.reasonToApply,
+        desiredSalary: this.desiredSalary,
+      });
+      // window.location.reload();
     },
   },
   computed: {

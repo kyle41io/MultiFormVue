@@ -43,6 +43,7 @@ export default {
       this.companies.push(newCompany);
     },
     handleNext() {
+      this.$emit("update-companies", this.companies);
       this.$emit("update-step", 3);
     },
   },

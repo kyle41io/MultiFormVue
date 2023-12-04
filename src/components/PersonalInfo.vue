@@ -18,7 +18,7 @@
       />
       <UploadImage v-model="info.avatar" />
     </div>
-    <button :class="{ disabled: !allRequiredPass }" @click="handleComplete">
+    <button :class="{ disabled: !allRequiredPass }" @click="handleNext">
       Tiếp
     </button>
   </div>
@@ -39,7 +39,6 @@ export default {
   },
   data() {
     return {
-      // allRequiredPass: true,
       info: {
         name: "",
         dob: "",
@@ -51,7 +50,8 @@ export default {
     };
   },
   methods: {
-    handleComplete() {
+    handleNext() {
+      this.$emit("update-info", this.info);
       this.$emit("update-step", 2);
     },
   },
