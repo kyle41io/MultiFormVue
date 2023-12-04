@@ -1,7 +1,12 @@
 <template>
   <div class="">
     <div id="personal-info">
-      <InputCustom required label="Họ và tên" v-model="info.name" />
+      <InputCustom
+        required
+        label="Họ và tên"
+        v-model="info.name"
+        :maxCharacter="100"
+      />
       <InputCustom required label="Ngày sinh" type="date" v-model="info.dob" />
       <DropDown v-model="info.city"></DropDown>
       <SearchPosition />
@@ -34,7 +39,7 @@ export default {
   },
   data() {
     return {
-      allRequiredPass: true,
+      // allRequiredPass: true,
       info: {
         name: "",
         dob: "",
@@ -47,14 +52,12 @@ export default {
   },
   methods: {
     handleComplete() {
-      console.log(
-        this.info.name,
-        this.info.dob,
-        this.info.city,
-        this.info.description,
-        this.info.avatar
-      );
       this.$emit("update-step", 2);
+    },
+  },
+  computed: {
+    allRequiredPass() {
+      return this.info.name && this.info.dob;
     },
   },
 };
@@ -64,7 +67,7 @@ export default {
 #personal-info {
   display: flex;
   width: 926px;
-  height: 849px;
+  min-height: 849px;
   padding: 24px 32px;
   flex-direction: column;
   align-items: flex-start;

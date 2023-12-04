@@ -27,7 +27,7 @@ export default {
       keyword: "",
       keyName: "name",
       keyId: "code",
-      // listOptions: positions,
+      listOptions: positions,
       selectedPositions: [],
     };
   },
@@ -42,15 +42,15 @@ export default {
     },
   },
   computed: {
-    listOptions() {
-      return (
-        (this.keyword.length &&
-          positions.filter((c) =>
-            c[this.keyName].toLowerCase().includes(this.keyword.toLowerCase())
-          )) ||
-        []
-      );
-    },
+    // listOptions() {
+    //   return (
+    //     (this.keyword.length &&
+    //       positions.filter((c) =>
+    //         c[this.keyName].toLowerCase().includes(this.keyword.toLowerCase())
+    //       )) ||
+    //     []
+    //   );
+    // },
   },
 };
 </script>

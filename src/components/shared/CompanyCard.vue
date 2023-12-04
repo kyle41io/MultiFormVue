@@ -17,6 +17,7 @@
       required
       label="Vị trí từng làm"
       v-model="companyData.position"
+      :maxCharacter="100"
     />
     <InputCustom
       required
@@ -27,7 +28,7 @@
     <InputCustom
       type="textarea"
       label="Mô tả về công việc"
-      :maxCharacter="1000"
+      :maxCharacter="5000"
       v-model="companyData.description"
     />
   </div>
@@ -58,7 +59,7 @@ export default {
 .company-card {
   display: flex;
   width: 1026px;
-  height: 504px;
+  min-height: 520px;
   padding: 24px;
   flex-direction: column;
   align-items: flex-start;

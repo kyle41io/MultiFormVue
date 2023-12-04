@@ -8,13 +8,27 @@
         @input="handleInput"
         @keydown="handleKeyDown"
         v-model="value"
+        @blur="isBlur = true"
+        :class="{ error: isBlur && required && !value }"
       ></textarea>
       <p class="character">{{ characterCount }}/{{ maxCharacter }}</p>
     </div>
     <div v-else-if="type === 'period'" class="period">
-      <input type="date" v-model="startDate" @input="handleInput" />
+      <input
+        type="date"
+        v-model="startDate"
+        @input="handleInput"
+        @blur="isBlur = true"
+        :class="{ error: isBlur && required && !value }"
+      />
       <DashIcon />
-      <input type="date" v-model="endDate" @input="handleInput" />
+      <input
+        type="date"
+        v-model="endDate"
+        @input="handleInput"
+        @blur="isBlur = true"
+        :class="{ error: isBlur && required && !value }"
+      />
     </div>
     <div v-else-if="type === 'money'" class="money">
       <input
@@ -22,7 +36,9 @@
         style="padding-right: 24px"
         @input="handleInput"
         @keydown="handleKeyDown"
+        @blur="isBlur = true"
         v-model="value"
+        :class="{ error: isBlur && required && !value }"
       />
       <div class="currency">VNĐ</div>
     </div>
@@ -32,8 +48,13 @@
       :placeholder="placeholder"
       @input="handleInput"
       @keydown="handleKeyDown"
+      @blur="isBlur = true"
       v-model="value"
+      :class="{ error: isBlur && required && !value }"
     />
+    <div v-if="isBlur && required && !value" class="error-text">
+      Thông tin quan trọng, yêu cầu nhập
+    </div>
   </div>
 </template>
 
@@ -53,7 +74,13 @@ export default {
   },
   components: { DashIcon },
   data() {
-    return { characterCount: 0, startDate: null, endDate: null, value: null };
+    return {
+      characterCount: 0,
+      startDate: null,
+      endDate: null,
+      value: null,
+      isBlur: false,
+    };
   },
   methods: {
     handleInput(event) {
@@ -131,6 +158,9 @@ export default {
       color: #333;
     }
   }
+  .error-text {
+    color: red;
+  }
 }
 input {
   min-height: 40px;
@@ -138,6 +168,10 @@ input {
   border-radius: 4px;
   border: 1px solid #dcdcdc;
   appearance: initial;
+  &.error {
+    border: 1px solid red;
+    outline-color: red;
+  }
 }
 textarea {
   position: relative;
@@ -151,5 +185,9 @@ textarea {
   border-radius: 4px;
   border: 1px solid #dcdcdc;
   resize: none;
+  &.error {
+    border: 1px solid red;
+    outline-color: red;
+  }
 }
 </style>

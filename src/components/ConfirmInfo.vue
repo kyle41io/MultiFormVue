@@ -27,15 +27,18 @@ export default {
   components: { InputCustom },
   data() {
     return {
-      allRequiredPass: true,
       reasonToApply: "",
       desiredSalary: 0,
     };
   },
   methods: {
     handleComplete() {
-      console.log(this.reasonToApply, this.desiredSalary);
-      // window.location.reload();
+      window.location.reload();
+    },
+  },
+  computed: {
+    allRequiredPass() {
+      return this.reasonToApply && this.desiredSalary;
     },
   },
 };
@@ -45,7 +48,7 @@ export default {
 #confirm-info {
   display: flex;
   width: 926px;
-  height: 346px;
+  min-height: 346px;
   padding: 24px 32px;
   flex-direction: column;
   align-items: flex-start;

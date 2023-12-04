@@ -26,7 +26,6 @@ export default {
   components: { CompanyCard, AddIcon },
   data() {
     return {
-      allRequiredPass: true,
       companies: [{}],
     };
   },
@@ -45,7 +44,16 @@ export default {
     },
     handleNext() {
       this.$emit("update-step", 3);
-      console.log(this.companies);
+    },
+  },
+  computed: {
+    allRequiredPass() {
+      for (const company of this.companies) {
+        if (!company.companyName || !company.position || !company.period) {
+          return false;
+        }
+      }
+      return true;
     },
   },
 };

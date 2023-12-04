@@ -8,7 +8,6 @@ export default {
   components: { PersonalInfo, WorkExperience, ConfirmInfo, StepBar },
   data() {
     return {
-      // component: PersonalInfo,
       step: 1,
     };
   },
