@@ -53,6 +53,7 @@ export default {
     handleNext() {
       this.$emit("update-info", this.info);
       this.$emit("update-step", 2);
+      console.log(this.info);
     },
   },
   computed: {
