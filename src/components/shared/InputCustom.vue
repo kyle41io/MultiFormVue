@@ -20,8 +20,7 @@
         @input="handleInput"
         @blur="isBlur = true"
         :class="{
-          error:
-            (isBlur && required && !value) || isInvalidDate || isInvalidPeriod,
+          error: (isBlur && required && !value) || isInvalidDate,
         }"
       />
       <DashIcon />
@@ -31,8 +30,7 @@
         @input="handleInput"
         @blur="isBlur = true"
         :class="{
-          error:
-            (isBlur && required && !value) || isInvalidDate || isInvalidPeriod,
+          error: (isBlur && required && !value) || isInvalidDate,
         }"
       />
     </div>
@@ -85,8 +83,8 @@ export default {
   data() {
     return {
       characterCount: 0,
-      startDate: "",
-      endDate: "",
+      startDate: null,
+      endDate: null,
       value: null,
       isBlur: false,
       isInvalidDate: false,
@@ -98,12 +96,12 @@ export default {
       const currentDate = new Date().toISOString().split("T")[0];
       if (this.type === "date" && this.value > currentDate) {
         this.isInvalidDate = true;
-        return;
+        return (this.value = null);
       } else this.isInvalidDate = false;
       if (this.type === "period") {
         if (this.startDate > currentDate || this.endDate > currentDate) {
           this.isInvalidDate = true;
-          return;
+          return (this.startDate = null), (this.endDate = null);
         } else this.isInvalidDate = false;
         this.inputValue = {
           startDate: this.startDate,
@@ -117,7 +115,7 @@ export default {
         this.characterCount = inputText.length;
         this.inputValue = inputText;
       }
-      // console.log(this.value);
+      // console.log(this.startDate);
     },
 
     handleKeyDown(event) {

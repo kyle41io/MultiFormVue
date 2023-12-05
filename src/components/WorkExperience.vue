@@ -4,7 +4,7 @@
       <CompanyCard
         v-for="(company, index) in companies"
         :key="index"
-        :company-data="company"
+        :companyData="company"
         @delete-company="deleteCompany(index)"
       />
     </div>
@@ -44,7 +44,8 @@ export default {
     },
     handleNext() {
       this.$emit("update-companies", this.companies);
-      this.$emit("update-step", 3);
+      // this.$emit("update-step", 3);
+      console.log(this.companies);
     },
   },
   computed: {
