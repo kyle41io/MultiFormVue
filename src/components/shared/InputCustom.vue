@@ -20,7 +20,7 @@
         @input="handleInput"
         @blur="isBlur = true"
         :class="{
-          error: (isBlur && required && !value) || isInvalidDate,
+          error: (isBlur && required && !startDate) || isInvalidDate,
         }"
       />
       <DashIcon />
@@ -30,7 +30,7 @@
         @input="handleInput"
         @blur="isBlur = true"
         :class="{
-          error: (isBlur && required && !value) || isInvalidDate,
+          error: (isBlur && required && !endDate) || isInvalidDate,
         }"
       />
     </div>
@@ -59,7 +59,10 @@
     <p v-if="isInvalidDate" class="error-text">
       Không được chọn quá thời gian hiện tại
     </p>
-    <div v-if="isBlur && required && !value" class="error-text">
+    <div
+      v-if="isBlur && required && !value && (!startDate || !endDate)"
+      class="error-text"
+    >
       Thông tin quan trọng, yêu cầu nhập
     </div>
   </div>
@@ -96,12 +99,12 @@ export default {
       const currentDate = new Date().toISOString().split("T")[0];
       if (this.type === "date" && this.value > currentDate) {
         this.isInvalidDate = true;
-        return (this.value = null);
+        return;
       } else this.isInvalidDate = false;
       if (this.type === "period") {
         if (this.startDate > currentDate || this.endDate > currentDate) {
           this.isInvalidDate = true;
-          return (this.startDate = null), (this.endDate = null);
+          return;
         } else this.isInvalidDate = false;
         this.inputValue = {
           startDate: this.startDate,
@@ -115,7 +118,6 @@ export default {
         this.characterCount = inputText.length;
         this.inputValue = inputText;
       }
-      // console.log(this.startDate);
     },
 
     handleKeyDown(event) {
