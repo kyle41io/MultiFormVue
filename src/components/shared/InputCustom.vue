@@ -57,7 +57,7 @@
       :class="{ error: (isBlur && required && !value) || isInvalidDate }"
     />
     <p v-if="isInvalidDate" class="error-text">
-      Không được chọn quá thời gian hiện tại
+      Ngày chọn không hợp lệ
     </p>
     <div
       v-if="isBlur && required && !value && (!startDate || !endDate)"
@@ -99,10 +99,14 @@ export default {
       const currentDate = new Date().toISOString().split("T")[0];
       if (this.type === "date" && this.value > currentDate) {
         this.isInvalidDate = true;
-        return;
+        return (this.inputValue = null);
       } else this.isInvalidDate = false;
       if (this.type === "period") {
-        if (this.startDate > currentDate || this.endDate > currentDate) {
+        if (
+          this.startDate > currentDate ||
+          this.endDate > currentDate ||
+          this.startDate > this.endDate
+        ) {
           this.isInvalidDate = true;
           return;
         } else this.isInvalidDate = false;
