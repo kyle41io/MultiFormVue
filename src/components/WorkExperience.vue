@@ -24,11 +24,6 @@ import CompanyCard from "./shared/CompanyCard.vue";
 import AddIcon from "./icons/AddIcon.vue";
 export default {
   components: { CompanyCard, AddIcon },
-  data() {
-    return {
-      companies: [{}],
-    };
-  },
   methods: {
     deleteCompany(index) {
       this.companies.splice(index, 1);
@@ -37,30 +32,31 @@ export default {
       const newCompany = {
         companyName: "",
         position: "",
-        period: {},
+        period: { startDate: "", endDate: "" },
         description: "",
       };
       this.companies.push(newCompany);
     },
     handleNext() {
-      this.$emit("update-companies", this.companies);
-      // this.$emit("update-step", 3);
-      console.log(this.companies);
+      this.$emit("update-step", 3);
     },
   },
   computed: {
     allRequiredPass() {
       for (const company of this.companies) {
         if (
-          !company.companyName ||
-          !company.position ||
-          !company.period.startDate ||
-          !company.period.endDate
+          company.companyName &&
+          company.position &&
+          company.period.startDate &&
+          company.period.endDate
         ) {
-          return false;
+          return true;
         }
       }
-      return true;
+      return false;
+    },
+    companies() {
+      return this.$store.state.companies;
     },
   },
 };

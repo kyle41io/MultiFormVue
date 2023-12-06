@@ -6,13 +6,13 @@
         type="textarea"
         label="Lý do muốn ứng tuyển vào công ty"
         :maxCharacter="1000"
-        v-model="reasonToApply"
+        v-model="confirmInfo.reasonToApply"
       />
       <InputCustom
         required
         type="money"
         label="Mức lương mong muốn"
-        v-model="desiredSalary"
+        v-model="confirmInfo.desiredSalary"
       />
     </div>
     <button :class="{ disabled: !allRequiredPass }" @click="handleComplete">
@@ -25,24 +25,17 @@
 import InputCustom from "./shared/InputCustom.vue";
 export default {
   components: { InputCustom },
-  data() {
-    return {
-      reasonToApply: "",
-      desiredSalary: 0,
-    };
-  },
   methods: {
     handleComplete() {
-      this.$emit("update-confirm-info", {
-        reasonToApply: this.reasonToApply,
-        desiredSalary: this.desiredSalary,
-      });
-      // window.location.reload();
+      console.log(this.$store.state);
     },
   },
   computed: {
     allRequiredPass() {
-      return this.reasonToApply && this.desiredSalary;
+      return this.confirmInfo.reasonToApply && this.confirmInfo.desiredSalary;
+    },
+    confirmInfo() {
+      return this.$store.state.confirmInfo;
     },
   },
 };

@@ -37,28 +37,17 @@ export default {
     SearchPosition,
     UploadImage,
   },
-  data() {
-    return {
-      info: {
-        name: "",
-        dob: "",
-        city: "",
-        positions: [],
-        description: "",
-        avatar: "",
-      },
-    };
-  },
   methods: {
     handleNext() {
-      this.$emit("update-info", this.info);
       this.$emit("update-step", 2);
-      console.log(this.info);
     },
   },
   computed: {
     allRequiredPass() {
       return this.info.name && this.info.dob;
+    },
+    info() {
+      return this.$store.state.info;
     },
   },
 };
