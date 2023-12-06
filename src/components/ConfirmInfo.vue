@@ -22,7 +22,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import InputCustom from "./shared/InputCustom.vue";
+
 export default {
   components: { InputCustom },
   methods: {
@@ -30,14 +33,12 @@ export default {
       console.log(this.$store.state);
     },
   },
-  computed: {
+  computed: mapState({
     allRequiredPass() {
       return this.confirmInfo.reasonToApply && this.confirmInfo.desiredSalary;
     },
-    confirmInfo() {
-      return this.$store.state.confirmInfo;
-    },
-  },
+    confirmInfo: (state) => state.confirmInfo,
+  }),
 };
 </script>
 

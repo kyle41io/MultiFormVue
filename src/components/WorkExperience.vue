@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import CompanyCard from "./shared/CompanyCard.vue";
 import AddIcon from "./icons/AddIcon.vue";
+
 export default {
   components: { CompanyCard, AddIcon },
   methods: {
@@ -41,7 +44,7 @@ export default {
       this.$emit("update-step", 3);
     },
   },
-  computed: {
+  computed: mapState({
     allRequiredPass() {
       for (const company of this.companies) {
         if (
@@ -55,10 +58,8 @@ export default {
       }
       return false;
     },
-    companies() {
-      return this.$store.state.companies;
-    },
-  },
+    companies: (state) => state.companies,
+  }),
 };
 </script>
 

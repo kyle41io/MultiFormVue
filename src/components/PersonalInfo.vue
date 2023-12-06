@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import InputCustom from "@/components/shared/InputCustom.vue";
 import SearchPosition from "@/components/shared/searchPosition/SearchPosition.vue";
 import DropDown from "./shared/DropDown.vue";
@@ -42,14 +44,12 @@ export default {
       this.$emit("update-step", 2);
     },
   },
-  computed: {
+  computed: mapState({
     allRequiredPass() {
       return this.info.name && this.info.dob;
     },
-    info() {
-      return this.$store.state.info;
-    },
-  },
+    info: (state) => state.info,
+  }),
 };
 </script>
 
